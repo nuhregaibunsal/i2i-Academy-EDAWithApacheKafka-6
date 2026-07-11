@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.i2i.academy</groupId>
+    <artifactId>eda-with-apache-kafka</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>EDA with Apache Kafka</name>
+    <description>Event-Driven Architecture demo: plain Java Kafka Producer and Consumer exchanging custom Java objects.</description>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <kafka.version>3.7.1</kafka.version>
+        <jackson.version>2.17.2</jackson.version>
+        <slf4j.version>2.0.13</slf4j.version>
+        <exec.plugin.version>3.3.0</exec.plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- Apache Kafka client (raw producer/consumer API) -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>${kafka.version}</version>
+        </dependency>
+
+        <!-- Jackson: serialize/deserialize custom Java objects as JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- Simple console logging for the Kafka client -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Run the two apps with:
+                 mvn exec:java -Dexec.mainClass="com.i2i.academy.eda.producer.OrderProducerApp"
+                 mvn exec:java -Dexec.mainClass="com.i2i.academy.eda.consumer.OrderConsumerApp" -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
