@@ -9,12 +9,13 @@ A **Producer** application publishes custom Java objects (`Order`) to a Kafka to
 
 ## Architecture
 
-```
- ┌──────────────────┐     Order (JSON)     ┌──────────────┐     Order (JSON)     ┌──────────────────┐
- │ OrderProducerApp │ ───────────────────▶ │  Kafka topic │ ───────────────────▶ │ OrderConsumerApp │
- │  (serializes)    │                      │   "orders"   │                      │ (deserializes &  │
- │                  │                      │              │                      │  prints)         │
- └──────────────────┘                      └──────────────┘                      └──────────────────┘
+```mermaid
+flowchart LR
+    P["OrderProducerApp<br/>(serializes Order → JSON)"] -->|Order JSON| T[["Kafka topic<br/>orders"]]
+    T -->|Order JSON| C["OrderConsumerApp<br/>(deserializes & prints)"]
+    subgraph Docker
+        T
+    end
 ```
 
 The two applications are decoupled: the producer does not know who (if anyone) consumes
